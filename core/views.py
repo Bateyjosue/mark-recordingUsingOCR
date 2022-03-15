@@ -8,4 +8,4 @@ from django.contrib.auth.decorators import login_required
     
 def index(request):
     context = {}
-    return render(request, 'index.html', context)
+    return render(request, 'account/login.html', context)

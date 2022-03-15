@@ -22,13 +22,13 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.apple',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.microsoft',
-    'social_django',
+    # 'social_django',
 ]
 
 #Allauth
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = settings.LOGIN_URL
+# ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = settings.LOGIN_URL
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 ACCOUNT_EMAIL_REQUIRED = True
@@ -38,16 +38,6 @@ ACCOUNT_SESSION_REMEMBER = None
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_UNIQUE_EMAIL = True
 
-SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
-SOCIAL_AUTH_AUTH0_DOMAIN = 'dev-joshishara.us.auth0.com'
-SOCIAL_AUTH_AUTH0_KEY = 'fGqRdkTTPwHVffeCjo4igNxilpexADkY'
-SOCIAL_AUTH_AUTH0_SECRET = 'YOUR_CLIENT_SECRET'
-
-SOCIAL_AUTH_AUTH0_SCOPE = [
-    'openid',
-    'profile',
-    'email'
-]
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
