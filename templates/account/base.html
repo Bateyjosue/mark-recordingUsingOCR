@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,6 +14,14 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <!-- Font Awesome Icons -->
+        <link rel="stylesheet" href="{% static 'adminlte/plugins/fontawesome-free/css/all.min.css' %}">
+        <!-- overlayScrollbars -->
+        <link rel="stylesheet" href="{% static 'adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="{% static 'adminlte/dist/css/adminlte.min.css' %}">
+
     </head>
     <body>
         {% block body %}
@@ -45,5 +54,29 @@
         {% endblock %}
         {% block extra_body %}
         {% endblock %}
+
+        <!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+    <script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- overlayScrollbars -->
+    <script src="{% static 'adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'adminlte/dist/js/adminlte.js' %}"></script>
+
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="{% static 'adminlte/plugins/jquery-mousewheel/jquery.mousewheel.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/raphael/raphael.min.js"></script>
+    <script src="{% static 'adminlte/plugins/jquery-mapael/jquery.mapael.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/jquery-mapael/maps/usa_states.min.js' %}"></script>
+    <!-- ChartJS -->
+    <script src="{% static 'adminlte/plugins/chart.js/Chart.min.js' %}"></script>
+
+    <!-- AdminLTE for demo purposes -->
+    <script src="{% static 'adminlte/dist/js/demo.js' %}"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="{% static 'adminlte/dist/js/pages/dashboard2.js' %}"></script>
     </body>
 </html>
