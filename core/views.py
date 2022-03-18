@@ -8,9 +8,9 @@ from .models import CourseModel as Course, ModuleModel
 def index(request):
     courses = Course.objects.all().filter(user = not request.user)
     context = {
-        'courses'           : Course.objects.all().filter(user = request.user),
-        'count_course'      : ModuleModel.objects.all().distinct().count(),
-        'dist_course'       : ModuleModel.objects.all(),
+        'courses'           : Course.objects.all().filter(user = request.user)[:10],
+        'count_course'      : Course.objects.all().distinct().count(),
+        'dist_course'       : ModuleModel.objects.all()[:9],
         'get_status_Pro'    : Course.objects.all().filter(status = 'Provisory').count(),
         'get_status_Fin'    : Course.objects.all().filter(status = 'Final').count(),
         'get_status_Can'    : Course.objects.all().filter(status = 'Cancel').count(),
@@ -20,3 +20,7 @@ def index(request):
         'last_added'        : Course.objects.all().order_by('-add')[:5],
     }
     return render(request, 'dashboard.html', context)
+
+@login_required
+def record_mark(request):
+    return render(request, 'record.html')
