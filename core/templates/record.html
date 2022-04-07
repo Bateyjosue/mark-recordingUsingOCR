@@ -20,7 +20,7 @@
                 <section class="content">
                     <div class="container-fluid">
                         <form action="" method="post">
-                            
+                            {%csrf_token%}
                             <!-- <div class="form-group">
                                 <label>End Period</label>
                                 <div class="col-md-6">
@@ -30,7 +30,7 @@
                             <div class="form-group ">
                                 <label>Upload a File</label>
                                 <div class="col-md-6">
-                                    <input type="file" name="end_period" class="form-control">
+                                    <input type="file" name="img" class="form-control">
                                 </div> 
                             </div>
                             
@@ -40,7 +40,7 @@
                             </div>
                             <!-- <label>Or </label> -->
                             <div class="form-group col-md-1 ">
-                                <a href="" class="form-control rounded-pill text-center bg-info">
+                                <a href="capture" class="form-control rounded-pill text-center bg-info">
                                     <i class="fa fa-camera"></i>
                                 </a>
                             </div>
@@ -56,7 +56,8 @@
                                         <!-- /.card-header -->
                                         <div class="card-body">
                                             <div class="callout callout-danger">
-                                            <h5>I am a danger callout!</h5>
+                                            <h5>{{mark}}</h5>
+                                            <h5>{{img}}</h5>
                                             </div>
                                         </div>
                                         <!-- /.card-body -->
@@ -71,9 +72,9 @@
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-text">From</span>
-                                    <input type="date" name="start_period" id="start" class="form-control">
+                                    <input type="date" name="start" id="start" class="form-control">
                                     <span class="input-group-text">to</span>
-                                    <input type="date" name="end_period" class="form-control">
+                                    <input type="date" name="end" class="form-control">
                                 </div> 
                             </div>
                             <div class="form-group">
