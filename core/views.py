@@ -10,7 +10,6 @@ from .models import UpLoadImage
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 
-from edenai import OCR
 from .forms import ImageForm
 
 import numpy as np
