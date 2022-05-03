@@ -12,19 +12,9 @@ from django.core.files.storage import FileSystemStorage
 
 from .forms import ImageForm
 
-import numpy as np
-import cv2
-import threading
-
-import http.client
-# Create your views here.
-captured = ''
-i = 0
-image = None
 
 
 @login_required
-@gzip.gzip_page
 def index(request):
     try:
         cam = VideoCamera()
@@ -35,7 +25,6 @@ def index(request):
 
 
 @login_required
-@gzip.gzip_page
 def record_mark(request):
     if request.method == 'POST':
         image = request.FILES.get('image')
