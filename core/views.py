@@ -16,11 +16,6 @@ from .forms import ImageForm
 
 @login_required
 def index(request):
-    try:
-        cam = VideoCamera()
-        return StreamingHttpResponse(gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
-    except:
-        pass
     return render(request, 'dashboard.html')
 
 
