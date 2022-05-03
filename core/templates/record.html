@@ -1,4 +1,5 @@
 {% extends "account/base.html"%}
+
     {% block content %}
         {% include "header.html" %}
             <div class="content-wrapper">
@@ -19,64 +20,16 @@
                 </div>
                 <section class="content">
                     <div class="container-fluid">
-                        <form action="" method="post">
+                        <form action="" method="post" enctype="multipart/form-data">
                             {%csrf_token%}
-                            <!-- <div class="form-group">
-                                <label>End Period</label>
-                                <div class="col-md-6">
-                                    <input type="date" name="end_period" class="form-control">
-                                </div> 
-                            </div> -->
                             <div class="form-group ">
                                 <label>Upload a File</label>
                                 <div class="col-md-6">
-                                    <input type="file" name="img" class="form-control">
+                                    <input type="file" name="image" class="form-control" placeholder="Upload a mark bord" accept="image/png, image/jpg, image/jpeg">
                                 </div> 
                             </div>
+                            <!-- <img src="{static '/capt.png' %}" alt="{{img}}"> -->
                             
-                            <div class="divide">
-                                - OR -
-                                <br>
-                            </div>
-                            <!-- <label>Or </label> -->
-                            <div class="form-group col-md-1 ">
-                                <a href="capture" class="form-control rounded-pill text-center bg-info">
-                                    <i class="fa fa-camera"></i>
-                                </a>
-                            </div>
-                            <div class="form-group">
-                                    <div class="col-md-6">
-                                        <div class="card card-default">
-                                        <div class="card-header">
-                                            <h3 class="card-title">
-                                            <i class="fas fa-bullhorn"></i>
-                                            Result Scanner
-                                            </h3>
-                                        </div>
-                                        <!-- /.card-header -->
-                                        <div class="card-body">
-                                            <div class="callout callout-danger">
-                                            <h5>{{mark}}</h5>
-                                            <h5>{{img}}</h5>
-                                            </div>
-                                        </div>
-                                        <!-- /.card-body -->
-                                        </div>
-                                        <!-- /.card -->
-                                    </div>
-                            </div>
-                            <div class="form-group">
-                                <div>
-                                    <label>Period</label>
-                                    <br>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-text">From</span>
-                                    <input type="date" name="start" id="start" class="form-control">
-                                    <span class="input-group-text">to</span>
-                                    <input type="date" name="end" class="form-control">
-                                </div> 
-                            </div>
                             <div class="form-group">
                                 <button type="submit" name="save" class="btn btn-primary">
                                     <a class="text-light">
@@ -85,7 +38,33 @@
                                 </button>
                             </div>
                         </form>
+                        {% if img_obj %}
+                            <h3>Succesfully uploaded : {{img_obj.title}}</h3>
+                            <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+                        {% endif %}
                     </div><!--/. container-fluid -->
+                    <style>
+                        .images-card {
+                            display:grid;
+                            width:70%;
+                            grid-template-columns:1fr 1fr;
+                            align-items:center; 
+                            justify-content: center;
+                            margin: auto;
+                        }
+                        .image-label{
+                            background: rgb(7, 164, 104);
+                            color: white;
+                        }
+                    </style>
+                    <div class="images-card">
+                        {% for image in images %}
+                            <div class="image-item">
+                                <img src="{{image.picture.url}}" alt="127.0.0.1:8000{{image.picture.url}}" srcset="" width="300" height="150">
+                                <center class="image-label">{{image.picture.url}}</center>
+                            </div>
+                        {% endfor%}
+                    </div>
                 </section>
                 <!-- /.content -->
             </div>
@@ -95,6 +74,16 @@
             <aside class="control-sidebar control-sidebar-dark">
                 <!-- Control sidebar content goes here -->
             </aside>
+            <script>
+                $('.toastsDefaultSuccess').onload(function() {
+                    $(document).Toasts('create', {
+                        class: 'bg-success',
+                        title: 'Saved!!!',
+                        subtitle: 'close',
+                        body: 'Image was successfully saved.'
+                    })
+                });
+            </script>
             <!-- /.control-sidebar -->
         {% include "footer.html" %}
     {% endblock %}

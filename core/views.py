@@ -1,119 +1,81 @@
 
+import threading
+from django.http import StreamingHttpResponse
+from django.views.decorators import gzip
+from django.core.mail import EmailMessage
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import CourseModel as Course, ModuleModel
+from .models import UpLoadImage
+from django.contrib import messages
+from django.core.files.storage import FileSystemStorage
 
 from edenai import OCR
+from .forms import ImageForm
 
 import numpy as np
 import cv2
+import threading
 
 import http.client
 # Create your views here.
 captured = ''
 i = 0
+image = None
 
 
 @login_required
+@gzip.gzip_page
 def index(request):
-    courses = Course.objects.all().filter(user=not request.user)
-    context = {
-        'courses': Course.objects.all().filter(user=request.user)[:10],
-        'count_course': Course.objects.all().distinct().count(),
-        'dist_course': ModuleModel.objects.all()[:9],
-        'get_status_Pro': Course.objects.all().filter(status='Provisory').count(),
-        'get_status_Fin': Course.objects.all().filter(status='Final').count(),
-        'get_status_Can': Course.objects.all().filter(status='Cancel').count(),
-        'pro': (Course.objects.all().filter(status='Provisory').count()/Course.objects.all().distinct().count()) * 100,
-        'fin': (Course.objects.all().filter(status='Final').count()/Course.objects.all().distinct().count()) * 100,
-        'can': (Course.objects.all().filter(status='Cancel').count()/Course.objects.all().distinct().count()) * 100,
-        'last_added': Course.objects.all().order_by('-add')[:5],
-    }
-    return render(request, 'dashboard.html', context)
+    try:
+        cam = VideoCamera()
+        return StreamingHttpResponse(gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
+    except:
+        pass
+    return render(request, 'dashboard.html')
 
 
 @login_required
+@gzip.gzip_page
 def record_mark(request):
-    if request.method == 'GET':
-        conn = http.client.HTTPSConnection(
-            "cloudlabs-image-ocr.p.rapidapi.com")
-
-        payload = "{% static 'images/3.jpg' %}"
-
-        headers = {
-            'content-type': "application/json",
-            'X-RapidAPI-Host': "cloudlabs-image-ocr.p.rapidapi.com",
-            'X-RapidAPI-Key': "d5e7bd069fmsh822a3ff6828266cp131b4ejsn99a6119f46b9"
-        }
-
-        conn.request("POST", "/ocr/recognizeUrl", payload, headers)
-
-        res = conn.getresponse()
-        data = res.read()
-
-        print(data.decode("utf-8"))
-
-        print(data.decode("utf-8"))
-        context = {
-            'mark': data.decode("utf-8"),
+    if request.method == 'POST':
+        image = request.FILES.get('image')
+        upload = UpLoadImage.objects.create(user = request.user, picture = image)
+        upload.save()
+        # message  = messages.success(request, "saved")
+        context ={
+            # 'message': message,
         }
         return render(request, 'record.html', context)
-    else:
-        # image = request.POST['img']
+    elif request.method == 'GET':
+        images = UpLoadImage.objects.all()
+        context ={
+            'images': images,
+        }
+        return render(request, 'record.html', context)
 
-        # img = cv2.imread('./static/images/3.jpg', 0)
-        # cv2.namedWindow('image', cv2.WINDOW_NORMAL)
-        # cv2.imshow('image', img)
-        # k = cv2.waitKey(0)
-        # if k == 27:
-        #     cv2.destroyAllWindows()
-        # elif k == ord('s'):
-        #     cap = cv2.imwrite('img.png', img)
-        #     print(cap)
-        #     cv2.destroyAllWindows()
+# class Video(object):
+#     def __init__(self, request):
+#         self.video = cv2.VideoCapture(0)
+#         (self.grabbed, self.frame) = self.video.read()
+#         threading.Thread(target=self.update, args=()).start()
 
-        start_periode = request.POST['start']
-        end_periode = request.POST['end']
-    return render(request, 'record.html')
+#     def __del__(self):
+#         self.video.release()
 
+#     def get_frame(self):
+#         image = self.frame
+#         _, jpeg = cv2.imencode('.jpg', image)
+#         return jpeg.tobytes()
 
-def capture(request):
-    cam = cv2.VideoCapture(0)
-    # cv2.namedWindow("Capture")
-    counter = 0
-    while True:
-        ret, frame = cam.read()
-        if not ret:
-            print("Failed to laoad...")
-            break
-        cv2.imshow("Capture", frame)
-        k = cv2.waitKey(0)
+#     def update(self):
+#         while True:
+#             (self.grabbed, self.frame) = self.video.read()
 
-        if k == ord('q'):
-            print("Quitting...")
-            break
-        elif k == ord('s'):
-            img = cv2.imwrite("capt_{}.png".format(counter), frame)
-            counter +=1
+# def gen(self):
+#     while True:
+#         frame = camera.get_frame()
+#         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
-
-    cam.release()
-    cam.destroyAllWindows()
-    context = {
-        'img' : img,
-    }
-    return render(request, 'record.html', context)
-
-
-# from edenai import OCR
-
-# Get your API key here: https://app.edenai.run/admin/account
-# ocr_apis = OCR("Your_API_key")
-
-# result = ocr_apis.basic(
-# # Available providers, languages and formats here: https://api.edenai.run/v1/redoc/#operation/OCR
-#    providers=["google","amazon"],
-#    language="en-US",
-#    file="your_image.png")
-
-# print(result)
+# def capture(request):
+#     pass
