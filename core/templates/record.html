@@ -63,7 +63,7 @@
                     <div class="images-card">
                         {% for image in images %}
                             <div class="image-item">
-                                <img src="https://ocr-mark.herokuapp.com{{image.picture.url}}" alt="https://ocr-mark.herokuapp.com{{image.picture.url}}" srcset="" width="300" height="150">
+                                <img src="https://ocr-mark.herokuapp.com{{image.picture.path}}" alt="https://ocr-mark.herokuapp.com{{image.picture.url}}" srcset="" width="300" height="150">
                                 <center class="image-label">{{image.picture.path}}</center>
                             </div>
                         {% endfor%}
