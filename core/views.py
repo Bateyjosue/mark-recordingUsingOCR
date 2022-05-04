@@ -22,7 +22,7 @@ def index(request):
 @login_required
 def record_mark(request):
     if request.method == 'POST':
-        image = request.FILES.getlist('image')
+        image = request.FILES.get('image')
         for img in image:
             upload = UpLoadImage.objects.create(user = request.user, picture = image)
             upload.save()
