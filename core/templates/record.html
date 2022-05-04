@@ -52,6 +52,9 @@
                             justify-content: center;
                             margin: auto;
                         }
+                        .image-card img{
+                            max-width: fit-content;
+                        }
                         .image-label{
                             background: rgb(7, 164, 104);
                             color: white;
@@ -60,8 +63,8 @@
                     <div class="images-card">
                         {% for image in images %}
                             <div class="image-item">
-                                <img src="{{image.picture.url}}" alt="127.0.0.1:8000{{image.picture.url}}" srcset="" width="300" height="150">
-                                <center class="image-label">{{image.picture.url}}</center>
+                                <img src="https://ocr-mark.herokuapp.com{{image.picture.url}}" alt="https://ocr-mark.herokuapp.com{{image.picture.url}}" srcset="" width="300" height="150">
+                                <center class="image-label">{{image.picture.path}}</center>
                             </div>
                         {% endfor%}
                     </div>
