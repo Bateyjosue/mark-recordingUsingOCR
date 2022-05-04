@@ -98,15 +98,16 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(os.getcwd(), 'db.sqlite3')
-    },
-    'users': {
-        'NAME': 'user_data',
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": os.path.join(os.getcwd(), 'db.sqlite3')
+    # },
+    'default': {
+        'NAME': os.getenv('MYSQL_SERVER_NAME'),
         'ENGINE': 'django.db.backends.mysql',
-        'USER': 'mysql_user',
-        'PASSWORD': 'priv4te'
+        'USER': os.getenv('MYSQL_ADMIN_USER'),
+        'PASSWORD':  os.getenv('MYSQL_ADMIN_PASSWORD'),
+        'HOST' : os.getenv('MYSQL_HOST_NAME'),
     }
 }
 
