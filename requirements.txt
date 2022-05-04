@@ -9,8 +9,10 @@ charset-normalizer==2.0.12
 cryptography==36.0.1
 cv==1.0.0
 defusedxml==0.7.1
+dj-database-url==0.5.0
 Django==3.2.10
 django-allauth==0.49.0
+django-on-heroku==1.1.2
 django-webcam==0.1.4b2
 ecdsa==0.17.0
 gunicorn==20.1.0
@@ -22,6 +24,7 @@ oauthlib==3.2.0
 opencv-python==4.5.5.64
 pep8==1.7.1
 Pillow==9.1.0
+psycopg2-binary==2.9.3
 pyasn1==0.4.8
 pycodestyle==2.5.0
 pycparser==2.21
@@ -39,3 +42,4 @@ social-auth-app-django==3.4.0
 social-auth-core==4.2.0
 sqlparse==0.4.2
 urllib3==1.26.8
+whitenoise==6.0.0
