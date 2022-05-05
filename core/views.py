@@ -24,7 +24,7 @@ def record_mark(request):
     if request.method == 'POST':
         image = request.FILES.get('image')
         for img in image:
-            upload = UpLoadImage.objects.create(user = request.user, picture = image)
+            upload = UpLoadImage.objects.create(user = request.user, picture = img)
             upload.save()
         # message  = messages.success(request, "saved")
         context ={
