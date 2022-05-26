@@ -88,27 +88,34 @@ def capture(request):
         if key == ord('s'):
             img_write = cv2.imwrite('img.png', frame)
             if img_write:
-                pa = cv2.imread(files)
+                pa = cv2.imread('/home/josh-ishara/Documents/Project/Memoir/mark-recordingUsingOCR/img.png')
                 print(files)
                 cv2.imshow('Show Image Camptured',pa)
                 url = 'https://pen-to-print-handwriting-ocr.p.rapidapi.com/recognize/'
-                image = urlparse(files)
+                image = urlparse('/home/josh-ishara/Documents/Project/Memoir/mark-recordingUsingOCR/img.png')
                 image = image.path
                 image = image.split('/')
                 image = image[-1]
                 payload = {}
                 files = [
-                    ('srcImg', (image, open(files, 'rb'), 'image/png'))
+                    ('srcImg', (image, open('/home/josh-ishara/Documents/Project/Memoir/mark-recordingUsingOCR/img.png', 'rb'), 'image/png'))
                 ]
                 headers = {
-                    "X-RapidAPI-Key": "d5e7bd069fmsh822a3ff6828266cp131b4ejsn99a6119f46b9"
+                    # "X-RapidAPI-Key": "d5e7bd069fmsh822a3ff6828266cp131b4ejsn99a6119f46b9",
+                    "X-RapidAPI-Key": "b55584df9dmshd8095426dd08d09p1276dejsn105ade750933"
+                    
                 }
 
                 response = requests.request("POST", url = url, headers = headers, data = payload, files = files)
                 v = json.loads(response.text)
                 val.append(v['value'])
                 print(val)
-
+                # reg = val[0].split('/')[0]
+                # mark = val[0].split('/')[1]
+                # print(f'Reg Number: {reg} & Mark: {mark}')
+                # record_mark = Marks.objects.create(student_reg_number = reg, mark = mark)
+                # record_mark.save()
+                # val.clear()
             else:
                 print("Error::Not Captured")
 
