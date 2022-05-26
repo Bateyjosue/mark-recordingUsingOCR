@@ -101,8 +101,7 @@ def capture(request):
                     ('srcImg', (image, open('/home/josh-ishara/Documents/Project/Memoir/mark-recordingUsingOCR/img.png', 'rb'), 'image/png'))
                 ]
                 headers = {
-                    # "X-RapidAPI-Key": "d5e7bd069fmsh822a3ff6828266cp131b4ejsn99a6119f46b9",
-                    "X-RapidAPI-Key": "b55584df9dmshd8095426dd08d09p1276dejsn105ade750933"
+                    "X-RapidAPI-Key": os.getenv("RAPIDAPI_KEY")
                     
                 }
 
