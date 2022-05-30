@@ -28,28 +28,28 @@
                             <div class="col-sm-3 col-6">
                                 <div class="description-block border-right">
                                 <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
-                                <h5 class="description-header">$35,210.43</h5>
-                                <span class="description-text">TOTAL REVENUE</span>
+                                <h5 class="description-header">{{total_student}}</h5>
+                                <span class="description-text">TOTAL STUDENT</span>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6">
                                 <div class="description-block border-right">
                                 <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
-                                <h5 class="description-header">$10,390.90</h5>
-                                <span class="description-text">TOTAL COST</span>
+                                <h5 class="description-header">{{high_mark.mark}}</h5>
+                                <span class="description-text">HIGHEST MARK</span>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6">
                                 <div class="description-block border-right">
                                 <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
-                                <h5 class="description-header">$24,813.53</h5>
-                                <span class="description-text">TOTAL PROFIT</span>
+                                <h5 class="description-header">{{low_mark}}</h5>
+                                <span class="description-text">LOWEST MARK</span>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-6">
                                 <div class="description-block">
                                 <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
-                                <h5 class="description-header">1200</h5>
+                                <h5 class="description-header">{{goal}}</h5>
                                 <span class="description-text">GOAL COMPLETIONS</span>
                                 </div>
                             </div>
@@ -94,26 +94,46 @@
                             <strong>Goal Completion</strong>
                             </p>
                             <div class="progress-group">
-                            Canceled Result
-                            <span class="float-right"><b>{{get_status_Can}}</b>/{{count_course}}</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-danger" style="width: {{can}}%"></div>
-                            </div>
+                                Student With  Grade A:
+                                <span class="float-right"><b>{{student_with_A}}</b>/{{all_student_grade}}</span>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-danger" style="width: {{A}}%"></div>
+                                </div>
                             </div>
                             <div class="progress-group">
-                            <span class="progress-text">Final Result</span>
-                            <span class="float-right"><b>{{get_status_Fin}}</b>/{{count_course}}</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-success" style="width: {{fin}}%"></div>
-                            </div>
+                                <span class="progress-text">
+                                    Student With  Grade B:
+                                </span>
+                                <span class="float-right"><b>{{student_with_B}}</b>/{{all_student_grade}}</span>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-success" style="width: {{B}}%"></div>
+                                </div>
                             </div>
         
                             <div class="progress-group">
-                            Provisory
-                            <span class="float-right"><b>{{get_status_Pro}}</b>/{{count_course}}</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-warning" style="width:{{pro}}%"></div>
+                                <span class="progress-text">
+                                    Student With  Grade C:
+                                </span>
+                                <span class="float-right"><b>{{student_with_C}}</b>/{{all_student_grade}}</span>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-success" style="width: {{C}}%"></div>
+                                </div>
                             </div>
+                            <div class="progress-group">
+                                <span class="progress-text">
+                                    Student With  Grade D:
+                                </span>
+                                <span class="float-right"><b>{{student_with_D}}</b>/{{all_student_grade}}</span>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-success" style="width: {{D}}%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-group">
+                                Student With  Grade Fail and CNC:
+                                <span class="float-right"><b>{{student_with_FAIL}}</b>/{{all_student_grade}}</span>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-warning" style="width:{{FAIL}}%"></div>
+                                </div>
                             </div>
                             <!-- /.progress-group -->
                         </div>
@@ -165,25 +185,25 @@
                             <thead>
                             <tr>
                             <th>Student ID</th>
-                            <th>Course</th>
-                            <th>Status</th>
+                            <th>Marks</th>
+                            <!-- <th>Status</th> -->
                             <th>Period</th>
                             </tr>
                             </thead>
                             <tbody>
-                                {% for course in courses %}
+                                {% for course in all_marks %}
                             <tr>
                             <td><a href="pages/examples/invoice.html">{{course.student_reg_number}}</a></td>
-                            <td>{{course.module.module_title}}</td>
-                            {% if course.status == 'Final' %}
+                            <td>{{course.mark}}</td>
+                            <!-- {% if course.status == 'Final' %}
                             <td><span class="badge badge-success">Final</span></td>
                             {% elif course.status == 'Provisory' %}
                             <td><span class="badge badge-warning">Provisory</span></td>
                             {% else %}
                             <td><span class="badge badge-danger">Cancel</span></td>
-                            {% endif %}
+                            {% endif %} -->
                             <td>
-                                <div class="sparkbar" data-color="#00a65a" data-height="20">{{course.start_periode| truncatechars:12}}/{{course.end_periode|truncatewords:1}}</div>
+                                <div class="sparkbar" data-color="#00a65a" data-height="20">{{course.add| truncatechars:12}}/{{course.update|truncatewords:1}}</div>
                             </td>
                             </tr>
                                 {% endfor %}
@@ -205,19 +225,19 @@
         
                 <div class="col-md-4">
                     <!-- Info Boxes Style 2 -->
-                    {% if courses%}
-                    {% for dict in dist_course %}
-                    <div class="info-box mb-3 bg-warning">
+                    {% if all_student %}
+                    {% for dict in all_student %}
+                    <div class="info-box mb-3 bg-info">
                         <span class="info-box-icon"><i class="fas fa-tag"></i></span>
                         <div class="info-box-content">
-                        <span class="info-box-text">{{dict.module_title}}</span>
+                        <span class="info-box-text">{{dict.student_reg_number}}</span>
                         <!-- <span class="info-box-number">5,200{{dist_course_count}}</span> -->
                         </div>
                         <!-- /.info-box-content -->
                     </div>
                     {% endfor %}
                     {%else%}
-                    No Course to Show
+                    No Student to Show
                     {% endif%}
                     </div>
                     <!-- /.info-box -->
@@ -241,17 +261,17 @@
                     <!-- /.card-header -->
                     <div class="card-body p-0">
                         <ul class="products-list product-list-in-card pl-2 pr-2">
-                        {% for last in last_added %}
+                        {% for last in recent_marks %}
                         <li class="item">
                             <div class="product-img">
                             <img src="{% static 'adminlte/dist/img/default-150x150.png' %}" alt="Product Image" class="img-size-50">
                             </div>
                             <div class="product-info">
                             <a href="javascript:void(0)" class="product-title">{{last.student_reg_number}}
-                                <span class="badge badge-warning float-right">{{last.marks}}</span></a>
-                            <span class="product-description">
+                                <span class="badge badge-warning float-right">{{last.mark}}</span></a>
+                            <!-- <span class="product-description">
                             {{last.module.module_title}}/{{last.module.module_code}}
-                            </span>
+                            </span> -->
                             </div>
                         </li>
                         {% endfor %}
