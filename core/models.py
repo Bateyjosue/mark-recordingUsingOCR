@@ -12,9 +12,9 @@ class UpLoadImage(models.Model):
         return str(self.picture.name)
 
 class Marks(models.Model):
+    user        = models.ForeignKey(User, on_delete = models.CASCADE, default= 1)
     student_reg_number  = models.CharField(max_length=50)
     mark                = models.IntegerField()
-
     add                 = models.DateTimeField(auto_now = True)
     update              = models.DateTimeField(auto_now_add = True)
     
