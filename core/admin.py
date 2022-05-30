@@ -9,4 +9,5 @@ class UpLoadImageAdmin(admin.ModelAdmin):
 
 @admin.register(Marks)
 class MarksAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'student_reg_number', 'mark')
+    list_display = ('pk', 'student_reg_number', 'mark', 'update')
+    list_filter = ('student_reg_number', 'update')
