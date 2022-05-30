@@ -15,16 +15,53 @@ import cv2
 import requests
 from urllib.parse import urlparse
 import json
+import math
 
 
 @login_required
 def index(request):
-    # try:
-    #     cam = VideoCamera()
-    #     return StreamingHttpResponse(gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
-    # except :
-    #     pass
-    return render(request, 'dashboard.html')
+    all_marks = Marks.objects.all()[:5]
+    recent_marks = Marks.objects.all().order_by('update')[:5]
+    all_student = Marks.objects.all().distinct()
+
+    all_student_grade= Marks.objects.all().count()
+    student_with_A = Marks.objects.filter(mark__gte = 80).count()
+    A = (student_with_A/all_student_grade) * 100 
+    student_with_FAIL = Marks.objects.filter(mark__lte = 49).count()
+    FAIL = (student_with_FAIL/all_student_grade) * 100 
+    student_with_B = Marks.objects.filter(mark__gte = 70).count() & Marks.objects.filter(mark__lte = 79 ).count()
+    B = (student_with_B/all_student_grade) * 100 
+    student_with_C = Marks.objects.filter(mark__gte = 60).count() & Marks.objects.filter(mark__lte = 69 ).count()
+    C = (student_with_C/all_student_grade) * 100 
+    student_with_D = Marks.objects.filter(mark__gte = 50).count() & Marks.objects.filter(mark__lte = 59 ).count()
+    D= (student_with_D/all_student_grade) * 100 
+
+    total_student = Marks.objects.all().distinct().count()
+    high_mark = Marks.objects.all().order_by('student_reg_number','mark')[:1]
+    low_mark = Marks.objects.all().order_by('student_reg_number','mark')[0]
+    context = {
+        'all_marks': all_marks,
+        'recent_marks': recent_marks,
+        'all_student': all_student,
+        'all_student_grade' : all_student_grade,
+        'student_with_A' : student_with_A,
+        'student_with_B' : student_with_B,
+        'student_with_C' : student_with_C,
+        'student_with_D' : student_with_D,
+        'student_with_FAIL' : student_with_FAIL,
+        'A' : A,
+        'FAIL' : FAIL,
+        'B' : B,
+        'C' : C,
+        'D' : D,
+        'total_student' : total_student,
+        'high_mark' : high_mark,
+        'low_mark' : low_mark,
+        
+
+
+    }
+    return render(request, 'dashboard.html', context)
 
 
 @login_required
@@ -46,30 +83,6 @@ def record_mark(request):
             'images': images,
         }
         return render(request, 'record.html', context)
-
-class VideoCamera(object):
-    # global video = None
-    def __init__(self, request):
-        self.video = cv2.VideoCapture(0)
-        (self.grabbed, self.frame) = self.video.read()
-        threading.Thread(target=self.update, args=()).start()
-
-    def __del__(self):
-        self.video.release()
-
-    def get_frame(self):
-        image = self.frame
-        _, jpeg = cv2.imencode('.jpg', image)
-        return jpeg.tobytes()
-
-    def update(self):
-        while True:
-            (self.grabbed, self.frame) = self.video.read()
-
-def gen(camera):
-    while True:
-        frame = camera.get_frame()
-        yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 @gzip.gzip_page
 def capture(request):
