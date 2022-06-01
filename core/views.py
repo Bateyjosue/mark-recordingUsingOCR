@@ -16,6 +16,7 @@ import requests
 from urllib.parse import urlparse
 import json
 import math
+import os
 
 
 @login_required
@@ -37,8 +38,8 @@ def index(request):
     D= (student_with_D/all_student_grade) * 100 
 
     total_student = Marks.objects.all().distinct().count()
-    high_mark = Marks.objects.all().order_by('student_reg_number','mark')[:1]
-    low_mark = Marks.objects.all().order_by('student_reg_number','mark')[0]
+    high_mark = Marks.objects.all().order_by('student_reg_number','mark')[2]
+    low_mark = Marks.objects.all().order_by('mark')[0]
     context = {
         'all_marks': all_marks,
         'recent_marks': recent_marks,
