@@ -1,46 +1,130 @@
 {% extends "account/base.html" %}
 
+
 {% load i18n %}
 {% load account socialaccount %}
-
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
+<style>
+    main{
+        display: flex;
+        padding: 50px;
+        justify-content: center;
+        font-family: verdana, tahoma, helvetica, sans-serif;
+    }
+    .log{
+        flex: 1;
+        margin:auto;
+        padding: 20px 0px;
+    }
+    .forms{
+        flex: 1;
+        padding: 50px;
+        margin: auto;
+        text-decoration: none;
+        text-transform: none;
 
-<h1>{% trans "Sign In" %}</h1>
+    }
+    .forms input[type="text"], input[type="password"]{
+        border: 0px solid  rgb(21, 24, 49);
+        width: 100%;
+        font-family: serif;
+        border-radius: 50px;
+        max-height: 100px;
+        height: 40px;
+        padding: 0px 20px;
+    }
+    .forms button{
+        width: 100%;
+        border-radius: 50px;
+        max-height: 100px;
+        height: 40px;
+        border: 0px solid  rgb(21, 24, 49);
+        text-align: center;
+        background:  rgb(21, 24, 49);
+        color: white;
+        margin-top: 10px;
 
-{% get_providers as socialaccount_providers %}
+    }
+    .login-or{
+        margin: auto;
+        padding: 30px 30px;
+    }
+    .title-log{
+        background: rgb(21, 24, 49);
+        color: white;
+        text-align: center;
+        padding: 30px 20px;
+        text-transform: uppercase;
+        margin-bottom: 30px;
+    }
+    .socialaccount_providers{
+        list-style-type: none;
+    }
+    .socialaccount_providers > li a{
+        color: white;
+    }
+    .socialaccount_providers > li:nth-child(1){
+        background: rgb(39, 38, 38);
+        border-radius: 5px;
+        margin-bottom: 10px;
+        padding: 15px;
+        text-align: center;
+    }
+    .socialaccount_providers > li:nth-child(2){
+        background: rgb(58, 77, 150);
+        border-radius: 5px;
+        margin-bottom: 10px;
+        padding: 15px;
+        text-align: center;
+    }
+    .socialaccount_providers > li:nth-child(3){
+        background: rgb(87, 40, 40);
+        border-radius: 5px;
+        margin-bottom: 5px;
+        padding: 15px;
+        text-align: center;
+    }
+</style>
+<h1 class="title-log">{% trans "Sign In" %}</h1>
+<main>
+    <div class="log">
 
-{% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
-
-<div class="socialaccount_ballot">
-
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
-
-  <div class="login-or">{% trans 'or' %}</div>
-
-</div>
-
-{% include "socialaccount/snippets/login_extra.html" %}
-
-{% else %}
-<p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-{% endif %}
-
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-</form>
+    
+        {% get_providers as socialaccount_providers %}
+    
+        {% if socialaccount_providers %}
+        <p>{% blocktrans with site.name as site_name %}Please sign in with one
+        of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+        for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+        <div class="socialaccount_ballot">
+    
+            <ul class="socialaccount_providers ">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </ul>
+    
+        </div>
+    
+        {% include "socialaccount/snippets/login_extra.html" %}
+    
+        {% else %}
+        <p>{% blocktrans %}If you have not created an account yet, then please
+        <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+        {% endif %}
+    </div>
+    <div class="login-or ">{% trans 'or' %}</div>
+    <div class="forms">
+        <form class="login" method="POST" action="{% url 'account_login' %}" >
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+            <br> <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+        </form>
+    </div>
+</main>
 
 {% endblock %}
