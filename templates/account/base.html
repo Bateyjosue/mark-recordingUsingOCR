@@ -25,31 +25,33 @@
     </head>
     <body>
         {% block body %}
+        <center>
+    
+            {% if messages %}
+                <div>
+                <strong>Messages:</strong>
+                <ul>
+                    {% for message in messages %}
+                    <li>{{message}}</li>
+                    {% endfor %}
+                </ul>
+                </div>
+            {% endif %}
+        </center>
 
-        {% if messages %}
-        <div>
-        <strong>Messages:</strong>
-        <ul>
-            {% for message in messages %}
-            <li>{{message}}</li>
-            {% endfor %}
-        </ul>
-        </div>
-        {% endif %}
-
-        <!-- <div>
+        <!-- <div style="color:white">
         <strong>Menu:</strong>
         <ul>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-            <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+            <li><a href="{% url 'account_email' %}" style="color:white; text-align:right !important">Change E-mail</a></li>
+            <li><a href="{% url 'account_logout' %}" style="color:white; text-align:right">Sign Out</a></li>
             {% else %}
             <li><a href="{% url 'account_login' %}">Sign In</a></li>
             <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
             {% endif %}
         </ul>
-        </div> -->
-        {% block record %}
+        </div>  -->
+        {% block record %} 
             
         {% endblock %}
         {% block content %}
