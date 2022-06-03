@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UpLoadImage, Marks
+from .models import UpLoadImage, Marks, Student, Module, Enroll
 
 # Register your models here.
 
@@ -11,3 +11,15 @@ class UpLoadImageAdmin(admin.ModelAdmin):
 class MarksAdmin(admin.ModelAdmin):
     list_display = ('pk', 'student_reg_number', 'mark', 'update')
     list_filter = ('student_reg_number', 'update')
+
+@admin.register(Student)
+class StudemtAdmin(admin.ModelAdmin):
+    list_display = ('pk','student_reg_number', 'name')
+
+@admin.register(Module)
+class ModuleAdmin(admin.ModelAdmin):
+    list_display = ('pk','name')
+
+@admin.register(Enroll)
+class EnrollAdmin(admin.ModelAdmin):
+    list_display = ('pk','module_code', 'student_reg_number', 'due_period')
