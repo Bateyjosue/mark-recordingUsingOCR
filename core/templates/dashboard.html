@@ -194,7 +194,7 @@
                                 {% for course in all_marks %}
                             <tr>
                             <td><a href="pages/examples/invoice.html">{{course.student_reg_number}}</a></td>
-                            <td>{{course.mark}}</td>
+                            <td>{{course.marks}}</td>
                             <!-- {% if course.status == 'Final' %}
                             <td><span class="badge badge-success">Final</span></td>
                             {% elif course.status == 'Provisory' %}
@@ -203,7 +203,7 @@
                             <td><span class="badge badge-danger">Cancel</span></td>
                             {% endif %} -->
                             <td>
-                                <div class="sparkbar" data-color="#00a65a" data-height="20">{{course.add| truncatechars:12}}/{{course.update|truncatewords:1}}</div>
+                                <div class="sparkbar" data-color="#00a65a" data-height="20">{{course.due_period}}</div>
                             </td>
                             </tr>
                                 {% endfor %}

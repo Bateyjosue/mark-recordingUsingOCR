@@ -23,25 +23,25 @@ from .models import Student, Module, Enroll, Capture
 
 @login_required
 def index(request):
-    all_marks = Marks.objects.all()[:5]
-    recent_marks = Marks.objects.all().order_by('update')[:5]
-    all_student = Marks.objects.all().distinct()
+    all_marks = Capture.objects.all()[:5]
+    recent_marks = Capture.objects.all().order_by('due_period')[:5]
+    all_student = Capture.objects.all().distinct()
 
-    all_student_grade= Marks.objects.all().count()
-    student_with_A = Marks.objects.filter(mark__gte = 80).count()
+    all_student_grade= Capture.objects.all().count()
+    student_with_A = Capture.objects.filter(marks__gte = 80).count()
     A = (student_with_A/all_student_grade) * 100 
-    student_with_FAIL = Marks.objects.filter(mark__lte = 49).count()
+    student_with_FAIL = Capture.objects.filter(marks__lte = 49).count()
     FAIL = (student_with_FAIL/all_student_grade) * 100 
-    student_with_B = Marks.objects.filter(mark__gte = 70).count() & Marks.objects.filter(mark__lte = 79 ).count()
+    student_with_B = Capture.objects.filter(marks__gte = 70).count() & Capture.objects.filter(marks__lte = 79 ).count()
     B = (student_with_B/all_student_grade) * 100 
-    student_with_C = Marks.objects.filter(mark__gte = 60).count() & Marks.objects.filter(mark__lte = 69 ).count()
+    student_with_C = Capture.objects.filter(marks__gte = 60).count() & Capture.objects.filter(marks__lte = 69 ).count()
     C = (student_with_C/all_student_grade) * 100 
-    student_with_D = Marks.objects.filter(mark__gte = 50).count() & Marks.objects.filter(mark__lte = 59 ).count()
+    student_with_D = Capture.objects.filter(marks__gte = 50).count() & Capture.objects.filter(marks__lte = 59 ).count()
     D= (student_with_D/all_student_grade) * 100 
 
-    total_student = Marks.objects.all().distinct().count()
-    high_mark = Marks.objects.all().order_by('student_reg_number','mark')[2]
-    low_mark = Marks.objects.all().order_by('mark')[0]
+    total_student = Capture.objects.all().distinct().count()
+    high_mark = Capture.objects.all().order_by('student_reg_number','marks')[2]
+    low_mark = Capture.objects.all().order_by('marks')[0]
     context = {
         'all_marks': all_marks,
         'recent_marks': recent_marks,
