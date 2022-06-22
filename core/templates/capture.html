@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | DataTables</title>
+  <title>AMR OCR</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -51,20 +51,10 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">DataTable with minimal features & hover style</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">DataTable with default features</h3>
+                <h3 class="card-title">DataTable with Captured Marks </h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -72,28 +62,33 @@
                   <thead>
                   <tr>
                     <th>Record ID</th>
+                    <th>Module Code</th>
+                    <th>Booklet NUmber(s)</th>
                     <th>Student Reg NUmber</th>
                     <th>Mark(s)</th>
-                    <!-- <th>Engine version</th>
-                    <th>CSS grade</th> -->
+                    <th>Due Period</th>
                   </tr>
                   </thead>
                   <tbody>
                 {% for mark in mark %}
                   <tr>
                       <td>{{mark.pk}}</td>
+                      <td>{{mark.module_code}}</td>
+                      <td>{{mark.booklet}}</td>
                       <td>{{mark.student_reg_number}}</td>
                       <td>{{mark.mark}}</td>
+                      <td>{{mark.due_period}}</td>
                   </tr>
                 {% endfor %}
                   </tbody>
                   <tfoot>
                   <tr>
                     <th>Record ID</th>
+                    <th>Module Code</th>
+                    <th>Booklet NUmber(s)</th>
                     <th>Student Reg NUmber</th>
                     <th>Mark(s)</th>
-                    <!-- <th>Engine version</th>
-                    <th>CSS grade</th> -->
+                    <th>Due Period</th>
                   </tr>
                   </tfoot>
                 </table>
