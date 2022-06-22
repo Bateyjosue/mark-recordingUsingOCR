@@ -1,0 +1,20 @@
+{% extends 'account/base.html'%}
+{% block content %}
+<style>
+    error-message {
+        width: 20%;
+        margin: auto;
+        margin-top: 200px;
+        font-family: verdana, tahoma, sans-serif;
+        text-align: center;
+    }
+</style>
+    {% include 'header.html'%}
+        <main>
+            <div class="error-message">
+                Oops Something went wrong Recapter again the mark
+                <a href="capture">back to capture</a>
+            </div>
+        </main>
+    {% include 'footer.html'%}
+{% endblock %}

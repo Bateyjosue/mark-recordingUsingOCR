@@ -18,6 +18,8 @@ import json
 import math
 import os
 
+from .models import Student, Module, Enroll, Capture
+
 
 @login_required
 def index(request):
@@ -115,20 +117,38 @@ def capture(request):
                     ('srcImg', (image, open('/home/josh-ishara/Documents/Project/Memoir/mark-recordingUsingOCR/img.png', 'rb'), 'image/png'))
                 ]
                 headers = {
-                    "X-RapidAPI-Key": os.getenv("RAPIDAPI_KEY")
+                    "X-RapidAPI-Key": "b55584df9dmshd8095426dd08d09p1276dejsn105ade750933"
                     
                 }
+                # try:
 
                 response = requests.request("POST", url = url, headers = headers, data = payload, files = files)
                 v = json.loads(response.text)
                 val.append(v['value'])
-                print(val)
-                # reg = val[0].split('/')[0]
+                print(v)
+                booklet = val[0].split('\n')[0]
+                code = val[0].split('\n')[1]
+                due = val[0].split('\n')[2]
+                reg = val[0].split('\n')[3].split('/')[0]
+                mark = val[0].split('\n')[3].split('/')[1]
+                # mark = val[0].split('/')[0]
                 # mark = val[0].split('/')[1]
-                # print(f'Reg Number: {reg} & Mark: {mark}')
+                print(f'Reg Number: {reg} & Mark: {mark} Booklet: {booklet} Module: {code} Period : {due}')
                 # record_mark = Marks.objects.create(student_reg_number = reg, mark = mark)
                 # record_mark.save()
-                # val.clear()
+                if Student.objects.filter(student_reg_number = reg).exists():
+                    if Enroll.objects.filter(student_reg_number = reg).exists():
+                        messages.error(request, 'This Reg Number is already in Captured')
+                    else:
+                        save_captured = Capture.objects.create(module_code = code, student_reg_number = reg, due_period = due, marks = mark, booklet = booklet)
+                        save_captured.save()
+
+                else:
+                    messages.error(request, 'Student Not Found, Check well the regnumber')
+
+                val.clear()
+                # except:
+                #     return render(request, 'error.html', {'message': messages})
             else:
                 print("Error::Not Captured")
 
@@ -139,6 +159,6 @@ def capture(request):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     context = {
-        'mark' : Marks.objects.all(),
+        'mark' : Capture.objects.all(),
     }
     return render(request, 'capture.html', context)
