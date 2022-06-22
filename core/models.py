@@ -47,6 +47,17 @@ class Enroll(models.Model):
     student_reg_number  = models.ForeignKey(Student, on_delete = models.CASCADE)
     due_period          = models.DateTimeField()
     marks               = models.IntegerField(default = 0)
+    booklet             = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.student_reg_number
+
+class Capture(models.Model):
+    module_code         = models.CharField(max_length=20)
+    student_reg_number  = models.CharField(max_length=20)
+    due_period          = models.CharField(max_length=20)
+    marks               = models.IntegerField(default = 0)
+    booklet             = models.CharField(max_length=20)
     
     def __str__(self):
         return self.student_reg_number
